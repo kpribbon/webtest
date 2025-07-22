@@ -1,0 +1,36 @@
+<h1>Pardot Custom Field Test</h1>
+<p>This is a test page for field tracking.</p>
+
+<script type='text/javascript'>
+  piAId = '566002';
+  piCId = '';
+  piHostname = 'go.pardot.com';
+
+  (function () {
+    function async_load() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = (document.location.protocol === 'https:' ? 'https://' : 'http://') + piHostname + '/pd.js';
+      var c = document.getElementsByTagName('script')[0];
+      c.parentNode.insertBefore(s, c);
+
+      var interval = setInterval(function () {
+        if (typeof piTracker !== 'undefined') {
+          clearInterval(interval);
+
+          var today = new Date().toISOString().split('T')[0];
+          var pageURL = window.location.href;
+
+          piTracker.set('Last_Visit_Date__c', today);
+          piTracker.set('Last_Visited_URL__c', pageURL);
+        }
+      }, 100);
+    }
+
+    if (window.attachEvent) {
+      window.attachEvent('onload', async_load);
+    } else {
+      window.addEventListener('load', async_load, false);
+    }
+  })();
+</script>
